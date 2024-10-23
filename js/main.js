@@ -68,7 +68,7 @@ function generarMapa(mapita, imagen) {
                 celda.setAttribute("class", "final");
             } else if (mapita[i][j] == 'B') {
                 celda.setAttribute("class", "bono");
-                // Aquí se puede añadir un evento para recoger el bono más adelante
+                
             }
             fila.appendChild(celda);
         }
@@ -76,7 +76,7 @@ function generarMapa(mapita, imagen) {
     }
     laberinto.appendChild(tabla);
 
-    // Verificar si el jugador ha llegado a la meta
+    // Verifica si el jugador ha llegado a la meta
     if (x == xfinal && y == yfinal) {
         juegoTerminado = true;
         clearInterval(temporizadorInterval); // Detener el temporizador
@@ -134,7 +134,7 @@ reinicio.onclick =function(){
 function moverJugador(nuevaX, nuevaY, direccion) {
     if (mapita[nuevaY][nuevaX] != '*') {
         if (mapita[nuevaY][nuevaX] == 'B') {
-            tiempoRestante += 1; // Aumentar el tiempo en 1 segundo
+            tiempoRestante += 1; 
         }
         
         mapita[y][x] = '_'; // Dejar espacio vacío
@@ -186,7 +186,7 @@ reinicio.onclick = function() {
 var tiempoRestante = 15; // Tiempo en segundos
 var temporizadorInterval;
 
-// Función para iniciar el temporizador
+// Iniciar el temporizador
 function iniciarTemporizador() {
     tiempoRestante = 15; // Reiniciar el tiempo
     document.getElementById('tiempo').innerText = tiempoRestante; // Mostrar el tiempo
@@ -203,7 +203,7 @@ function iniciarTemporizador() {
     }, 1000);
 }
 
-// Función para reiniciar el juego
+// Reiniciar el juego
 function reiniciarJuego() {
     // Lógica de reinicio existente
     x = 1; // Posición inicial x
