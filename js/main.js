@@ -2,18 +2,20 @@ var x;
 var y;
 var xfinal;
 var yfinal;
+var juegoTerminado = false;
+
 
 var mapa = [
     "******************",
-    "*_________*______*",
+    "*________B*______*",
     "*_*****_____******",
     "*______***__*__*_*",
     "***_*____*____**_*",
     "*___*____**__*___*",
     "*_********__**_*_*",
-    "*____*______*__*_*",
+    "*____*_____B*__*_*",
     "*_**_*__*****_**_*",
-    "*o*__*________**W*",
+    "*o*__*_______B**W*",
     "******************"
 ];
 
@@ -64,6 +66,9 @@ function generarMapa(mapita, imagen) {
                 xfinal = j;
                 yfinal = i;
                 celda.setAttribute("class", "final");
+            } else if (mapita[i][j] == 'B') {
+                celda.setAttribute("class", "bono");
+                // Aquí se puede añadir un evento para recoger el bono más adelante
             }
             fila.appendChild(celda);
         }
@@ -71,7 +76,11 @@ function generarMapa(mapita, imagen) {
     }
     laberinto.appendChild(tabla);
 
+    // Verificar si el jugador ha llegado a la meta
     if (x == xfinal && y == yfinal) {
+        juegoTerminado = true;
+        clearInterval(temporizadorInterval); // Detener el temporizador
+        
         var tabla2 = document.createElement('table');
         tabla2.setAttribute("class", "fondo");
         for (var i = 0; i < mapit.length; i++) {
@@ -87,58 +96,132 @@ function generarMapa(mapita, imagen) {
         }
         laberinto.appendChild(tabla2);
         laberinto.replaceChild(tabla2, laberinto.firstChild);
-        var mensaje = document.createElement('h3');
-        var texto = document.createTextNode('!!  CAMPEON  !!');
-        mensaje.appendChild(texto);
-        laberinto.appendChild(mensaje);
     }
 }
+
 
 generarMapa(mapita, 'derecha');
 
 arriba.onclick = function() {
-  moverJugador(x, y - 1, 'arriba');
+    if(!juegoTerminado){
+        moverJugador(x, y - 1, 'arriba');  
+    }
 }
 
 derecha.onclick = function() {
-  moverJugador(x + 1, y, 'derecha');
+    if(!juegoTerminado){
+        moverJugador(x + 1, y, 'derecha');
+    } 
 }
 
 izquierda.onclick = function() {
-  moverJugador(x - 1, y, 'izquierda');
+    if(!juegoTerminado){
+        moverJugador(x - 1, y, 'izquierda'); 
+    }
 }
 
 abajo.onclick = function() {
-  moverJugador(x, y + 1, 'abajo');
+    if(!juegoTerminado){
+        moverJugador(x, y + 1, 'abajo');  
+    }
+}
+
+reinicio.onclick =function(){
+    moverJugador(x=0,y=0, 'derecha');
 }
 
 
 function moverJugador(nuevaX, nuevaY, direccion) {
-  if (mapita[nuevaY][nuevaX] != '*') {
-      mapita[y][x] = '_'; // Dejar espacio vacío
-      x = nuevaX; // Actualizar posición x
-      y = nuevaY; // Actualizar posición y
-      mapita[y][x] = 'o'; // Actualizar nueva posición
-      generarMapa(mapita, direccion); // Volver a generar el mapa con la imagen de dirección
-  }
+    if (mapita[nuevaY][nuevaX] != '*') {
+        if (mapita[nuevaY][nuevaX] == 'B') {
+            tiempoRestante += 1; // Aumentar el tiempo en 1 segundo
+        }
+        
+        mapita[y][x] = '_'; // Dejar espacio vacío
+        x = nuevaX; // Actualizar posición x
+        y = nuevaY; // Actualizar posición y
+        mapita[y][x] = 'o'; // Actualizar nueva posición
+        generarMapa(mapita, direccion); // Volver a generar el mapa con la imagen de dirección
+    }
 }
+
 
 // Mover con teclado
 document.addEventListener('keydown', function(event) {
     switch (event.key) {
         case 'ArrowUp':
-            moverJugador(x, y - 1, 'arriba');
+            if(!juegoTerminado){
+              moverJugador(x, y - 1, 'arriba');  
+            } 
             
             break;
         case 'ArrowRight':
-            moverJugador(x + 1, y, 'derecha');
+            if(!juegoTerminado){
+                moverJugador(x + 1, y, 'derecha');
+            } 
             
             break;
         case 'ArrowLeft':
-            moverJugador(x - 1, y, 'izquierda');
+            if(!juegoTerminado){
+                moverJugador(x - 1, y, 'izquierda'); 
+            } 
             break;
         case 'ArrowDown':
-            moverJugador(x, y + 1, 'abajo');
+            if(!juegoTerminado){
+              moverJugador(x, y + 1, 'abajo');  
+            } 
             break;
     }
 });
+
+reinicio.onclick = function() {
+    reiniciarJuego();
+};
+
+
+
+/* TEMPORIZADOR */
+
+
+var tiempoRestante = 15; // Tiempo en segundos
+var temporizadorInterval;
+
+// Función para iniciar el temporizador
+function iniciarTemporizador() {
+    tiempoRestante = 15; // Reiniciar el tiempo
+    document.getElementById('tiempo').innerText = tiempoRestante; // Mostrar el tiempo
+
+    temporizadorInterval = setInterval(function() {
+        tiempoRestante--;
+        document.getElementById('tiempo').innerText = tiempoRestante; // Actualizar el tiempo mostrado
+        
+        if (tiempoRestante <= 0) {
+            clearInterval(temporizadorInterval); // Detener el temporizador
+            alert("¡Se acabó el tiempo! Reiniciando el juego...");
+            reiniciarJuego(); // Llamar a la función para reiniciar el juego
+        }
+    }, 1000);
+}
+
+// Función para reiniciar el juego
+function reiniciarJuego() {
+    // Lógica de reinicio existente
+    x = 1; // Posición inicial x
+    y = 9; // Posición inicial y
+    juegoTerminado = false; // Reiniciar estado del juego
+
+    // Limpiar la posición anterior del jugador
+    for (var i = 0; i < mapita.length; i++) {
+        for (var j = 0; j < mapita[i].length; j++) {
+            if (mapita[i][j] == 'o') {
+                mapita[i][j] = '_'; // Limpiar posición anterior del jugador
+            }
+        }
+    }
+
+    mapita[y][x] = 'o'; // Colocar al jugador en la posición inicial
+    generarMapa(mapita, 'derecha'); // Regenerar el mapa
+    iniciarTemporizador(); // Reiniciar el temporizador
+}
+ 
+iniciarTemporizador();
