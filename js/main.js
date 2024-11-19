@@ -96,6 +96,8 @@ function generarMapa(mapita, imagen) {
         }
         laberinto.appendChild(tabla2);
         laberinto.replaceChild(tabla2, laberinto.firstChild);
+
+        showAlert("HAS LLEGADO A LA META");
     }
 }
 
