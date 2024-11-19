@@ -4,12 +4,12 @@
 	color: white;
 }
 body{
-    background:url(paisaje_fondo.jpeg)no-repeat center center fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-	
+        background:url(paisaje_fondo.jpeg)no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	zoom: 125%;
 
 }
 
