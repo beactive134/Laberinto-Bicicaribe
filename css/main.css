@@ -181,7 +181,7 @@ img{
 }
 
 .bono {
-    background-image: url(water-bottle.png);
+    background-image: url(water-bottle.png) no-repeat;
 
 }
 	/*responsive
