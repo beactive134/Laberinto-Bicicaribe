@@ -197,7 +197,7 @@ function iniciarTemporizador() {
         
         if (tiempoRestante <= 0) {
             clearInterval(temporizadorInterval); // Detener el temporizador
-            alert("¡Se acabó el tiempo! Reiniciando el juego...");
+            showAlert("¡Se acabó el tiempo! Reiniciando el juego...");
             reiniciarJuego(); // Llamar a la función para reiniciar el juego
         }
     }, 1000);
@@ -223,5 +223,19 @@ function reiniciarJuego() {
     generarMapa(mapita, 'derecha'); // Regenerar el mapa
     iniciarTemporizador(); // Reiniciar el temporizador
 }
+
+function showAlert(message) {
+    const alertElement = document.getElementById("customAlert");
+    const alertMessage = document.getElementById("alertMessage");
+   
+    alertMessage.textContent = message;
+    alertElement.style.display = "block";
+}
+
+function closeAlert() {
+    const alertElement = document.getElementById("customAlert");
+    alertElement.style.display = "none";
+}
+
  
 iniciarTemporizador();
