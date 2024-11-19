@@ -183,12 +183,12 @@ reinicio.onclick = function() {
 /* TEMPORIZADOR */
 
 
-var tiempoRestante = 15; // Tiempo en segundos
+var tiempoRestante = 20; // Tiempo en segundos
 var temporizadorInterval;
 
 // Iniciar el temporizador
 function iniciarTemporizador() {
-    tiempoRestante = 15; // Reiniciar el tiempo
+    tiempoRestante = 20; // Reiniciar el tiempo
     document.getElementById('tiempo').innerText = tiempoRestante; // Mostrar el tiempo
 
     temporizadorInterval = setInterval(function() {
